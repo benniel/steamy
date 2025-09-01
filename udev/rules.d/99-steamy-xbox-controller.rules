@@ -1,0 +1,10 @@
+# Disable autosuspend for the dongle
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="045e", ATTR{idProduct}=="02fe", ATTR{power/autosuspend}="-1"
+
+# Controller connected/disconnected events
+ACTION=="add", KERNEL=="js*", SUBSYSTEM=="input", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="steamy.service", ENV{SYSTEMD_USER_WANTS}+="steamy-notify@n.service"
+# This rule probably requires env vars to keep track of controller /dev/input paths. It currently doesn't work. 
+# ACTION=="remove", KERNEL=="js*", SUBSYSTEM=="input", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="steamy-notify@d.service"
+
+# Battery change events
+ACTION=="change", SUBSYSTEM=="power_supply", SUBSYSTEMS=="xone-gip", RUN+="/usr/bin/systemd-run /usr/share/steamy/xbox_battery.sh %k"
