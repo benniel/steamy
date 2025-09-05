@@ -15,7 +15,7 @@ NewControllerConnected() {
 
     # Get the battery level for the latest controller
     upower_path=$(upower -e | grep gip | tail -n1)
-    battery_level=$(upower -i $upower_path | grep percentage | awk '{print $2}')
+    battery_level=$(upower -i $upower_path | grep "battery-level" | awk '{print $2}')
 
     notify-send "Controller conntected" "Battery: $battery_level" \
         -i $controller_icon \
