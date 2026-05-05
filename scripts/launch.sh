@@ -1,23 +1,26 @@
 #!/bin/bash
 
-unset $launcher_exec
-unset $launcher_name
+# Configuration Lookup
+USER_CONFIG="$HOME/.config/steamy/steamy.conf"
+SYSTEM_CONFIG="/usr/share/steamy/default.conf"
 
-while getopts c: opt; do
-    case $opt in
-        c)
-            source $OPTARG
-            [[ $? != 0 ]] && exit 1 ;;
-        *)
-            echo Syntax: launch.sh -c \<config file\> >& 2
-            exit 1 ;;
-    esac
-done
+if [[ -f "$USER_CONFIG" ]]; then
+    source "$USER_CONFIG"
+elif [[ -f "$SYSTEM_CONFIG" ]]; then
+    source "$SYSTEM_CONFIG"
+else
+    # Hardcoded fallbacks
+    launcher_exec=()
+    launcher_name="Unknown"
+    launcher_icon="/usr/share/steamy/icons/transparent-steam.png"
+    controller_icon="/usr/share/steamy/icons/transparent-controller.png"
+fi
 
-[[ -n $launcher_exec ]] || exit 0
+# Ensure launcher_exec is treated as an array even if not defined in config
+[[ -z "${launcher_exec[0]}" ]] && launcher_exec=()
 
 notify-send "Steamy" "Launching $launcher_name..." \
-    -i $launcher_icon \
+    -i "$launcher_icon" \
     -u normal
 
-${launcher_exec[@]}
+"${launcher_exec[@]}"
