@@ -1,0 +1,6 @@
+[Unit]
+Description=Controller notifications service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/steamy/notify.sh -c %h/.config/steamy/steamy.conf -%i

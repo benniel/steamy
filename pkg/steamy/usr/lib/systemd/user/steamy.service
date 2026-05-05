@@ -1,0 +1,6 @@
+[Unit]
+Description=Steamy game launcher service
+
+[Service]
+Type=simple
+ExecStart=/usr/share/steamy/launch.sh -c %h/.config/steamy/steamy.conf
