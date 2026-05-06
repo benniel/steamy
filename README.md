@@ -8,20 +8,23 @@ A config utility to make some quality-of-life improvements to the Linux controll
 - Flash the controller LED (slow) when the battery reaches 10% capacity
 - Flash the controller LED (fast) when the battery reaches 5% capacity
 
-## Installation
-
-### Using a Package Manager
+# Installation Instructions
+## Using a Package Manager
 If you are using a distribution that supports `PKGBUILD` (like Arch Linux), you can build and install the package using `makepkg -si`.
+
+**Important**: After installing via a package manager, you must run the following command so systemd recognizes the services:
+```bash
+systemctl --user daemon-reload
+```
 
 ### Manual Installation
 You can install Steamy manually using the provided Makefile:
 ```bash
 sudo make install
 ```
-To enable the background services:
-```bash
-systemctl --user enable --now steamy
-```
+The installation script will provide the necessary commands to prepare the system.
+
+**Note**: Do NOT enable the `steamy` service manually. It is designed to be triggered automatically by udev when a controller is connected.
 
 ## Configuration
 Steamy uses a configuration hierarchy. It first looks for a user-specific configuration file; if not found, it falls back to the system default.

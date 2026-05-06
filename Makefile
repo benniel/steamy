@@ -38,8 +38,14 @@ install:
 
 	# Reload udev
 	sudo udevadm control --reload
-	@echo "Installation complete."
-	@echo "To enable the services, run: systemctl --user enable --now steamy"
+	@echo ""
+	@echo "-----------------------------------------------------------"
+	@echo "Installation complete!"
+	@echo "To ensure Steamy starts when a controller is connected,"
+	@echo "please run the following command once:"
+	@echo ""
+	@echo "  systemctl --user daemon-reload"
+	@echo "-----------------------------------------------------------"
 
 uninstall:
 	@echo "Uninstalling Steamy..."
